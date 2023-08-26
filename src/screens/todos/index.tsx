@@ -1,6 +1,6 @@
 import React from 'react'
 import { ListItem, Button as ListButton, Icon } from '@rneui/themed';
-import { Alert, View } from 'react-native';
+import { Alert, View, Dimensions } from 'react-native';
 import { useTodoContext } from '../../contexts/todo';
 import { Todo, statusIcons } from '../../typings';
 import { TextInput } from 'react-native-paper';
@@ -9,15 +9,18 @@ function Index({ route: { params: { todo, Group } }, navigation }: any) {
     const [Todo, setTodo] = React.useState<Todo>(todo);
     const { todoDispatch } = useTodoContext();
     const [description, setDescription] = React.useState<string>(todo.description);
+    const screenWidth = Dimensions.get('window').width;
 
     return (
         <View>
             <ListItem.Swipeable
+                leftWidth={0}
+                rightWidth={screenWidth / 6}
                 rightContent={(reset) => (
                     <ListButton
-                        title="Delete"
+                        title=""
                         icon={{ name: 'delete', color: 'white' }}
-                        buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
+                        buttonStyle={{ minHeight: '100%', backgroundColor: '#F45050' }}
                         onPress={() => {
                             Alert.alert(
                                 'แจ้งเตือน',

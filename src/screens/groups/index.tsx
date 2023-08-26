@@ -1,8 +1,8 @@
 import React from 'react'
-import { Text, TextInput, Button, Divider } from 'react-native-paper'
-import { View, ScrollView, Alert, TextInput as Input } from 'react-native';
+import { Text, Button } from 'react-native-paper'
+import { View, ScrollView, Alert, TextInput as Input, Dimensions } from 'react-native';
 import { useTodoContext } from '../../contexts/todo';
-import { Group, Status, Todo, statusIcons } from '../../typings';
+import { Group, Todo, statusIcons } from '../../typings';
 import { ListItem, Button as ListButton, Icon } from '@rneui/themed';
 import uuid from 'react-native-uuid';
 
@@ -12,8 +12,11 @@ const TodoItem = ({ todo, Group, navigation }: {
     navigation: any
 }) => {
     const { todoDispatch } = useTodoContext();
+    const screenWidth = Dimensions.get('window').width;
 
     return <ListItem.Swipeable
+        leftWidth={0}
+        rightWidth={screenWidth/6}
         onPress={() => {
             navigation.navigate("todo", {
                 todo, Group
@@ -21,9 +24,9 @@ const TodoItem = ({ todo, Group, navigation }: {
         }}
         rightContent={(reset) => (
             <ListButton
-                title="Delete"
+                title=""
                 icon={{ name: 'delete', color: 'white' }}
-                buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
+                buttonStyle={{ minHeight: '100%', backgroundColor: '#F45050' }}
                 onPress={() => {
                     Alert.alert(
                         'แจ้งเตือน',

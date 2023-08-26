@@ -5,12 +5,13 @@ import { Button } from 'react-native-paper';
 import { useTodoContext } from '../contexts/todo';
 import { ListItem, Button as ListButton } from '@rneui/themed';
 import { Group, Todo } from '../typings';
+import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import uuid from 'react-native-uuid';
 
 function Index({ navigation }: any) {
     const { groups: Groups, groupDispatch, todoDispatch, todos } = useTodoContext();
-
+    const screenWidth = Dimensions.get('window').width;
     return (
         <View style={{ flexGrow: 1 }}>
             <ScrollView>
@@ -18,6 +19,8 @@ function Index({ navigation }: any) {
                     Groups.length > 0 ? (
                         Groups.map((group: any, index) => {
                             return <ListItem.Swipeable
+                                leftWidth={0}
+                                rightWidth={screenWidth / 6}
                                 key={index}
                                 onPress={() => {
                                     navigation.navigate("group", {
@@ -27,31 +30,11 @@ function Index({ navigation }: any) {
                                 }}
                                 rightContent={(reset) => (
                                     <ListButton
-                                        title="Delete"
-                                        onPress={() => {
-                                            Alert.alert(
-                                                'แจ้งเตือน',
-                                                `"${group.title}" จะถูกลบอย่างถาวร`,
-                                                [
-                                                    {
-                                                        text: 'ยกเลิก',
-                                                        style: 'cancel',
-                                                    },
-                                                    {
-                                                        text: 'ลบรายการ',
-                                                        style: 'default',
-                                                        onPress: () => {
-                                                            groupDispatch({ type: "Remove", payload: group })
-                                                            todoDispatch({ type: "Removes", group: group.id })
-                                                            reset()
-                                                        }
-                                                    }
-                                                ]
-                                            )
-                                        }}
+                                        title=""
                                         icon={{ name: 'delete', color: 'white' }}
-                                        buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
+                                        buttonStyle={{ minHeight: '100%', backgroundColor: '#F45050' }}
                                     />
+
                                 )}
                             >
                                 <Icon name="folder" size={20} />
