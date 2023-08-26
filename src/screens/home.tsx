@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text } from '@react-native-material/core'; // Import the FAB component
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Alert } from 'react-native';
 import { Button, IconButton, List } from 'react-native-paper';
 import { useTodoContext } from '../contexts/todo';
 import uuid from 'react-native-uuid';
@@ -30,8 +30,25 @@ function Index({ navigation }: any) {
                                         <ListButton
                                             title="Delete"
                                             onPress={() => {
-                                                Dispatch({ type: "Remove", payload: group })
-                                                reset()
+                                                Alert.alert(
+                                                    'แจ้งเตือน',
+                                                    `"${group.title}" จะถูกลบอย่างถาวร`,
+                                                    [
+                                                        {
+                                                            text: 'ยกเลิก',
+                                                            style: 'cancel',
+                                                        },
+                                                        {
+                                                            text: 'ลบรายการ',
+                                                            style: 'default',
+                                                            onPress: () => {
+                                                                Dispatch({ type: "Remove", payload: group })
+                                                                reset()
+                                                            }
+                                                        }
+                                                    ]
+                                                )
+
                                             }}
                                             icon={{ name: 'delete', color: 'white' }}
                                             buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
