@@ -1,9 +1,14 @@
 import React from 'react'
 import { Text, TextInput, Button } from 'react-native-paper'
 import { View } from 'react-native';
+import { useTodoContext } from '../../contexts/todo';
+import { Group } from '../../typings/todo';
 
-function Index({ route: { params: { group, focus } } }: any) {
-    const [title, setTitle] = React.useState<string>(group.title);
+function Index({ route: { params: { group : payload, focus } } }: any) {
+    const { groupDispatch : Dispatch } = useTodoContext();
+
+    const [Group, setGroup] = React.useState<Group>(payload);
+    const [title, setTitle] = React.useState<string>(payload.title);
     const [isFocus, setFocus] = React.useState<boolean>(focus);
 
     return (
@@ -13,7 +18,15 @@ function Index({ route: { params: { group, focus } } }: any) {
                 value={title}
                 onChangeText={text => setTitle(text)}
                 onFocus={() => setFocus(true)}
-                onBlur={() => setFocus(false)}
+                onBlur={() => {
+                    setFocus(false)
+                    const payload : Group = {
+                        ...Group,
+                        ...{title: title}
+                    }
+                    Dispatch({type : "Edit", payload: payload})
+                    setGroup(payload)
+                }}
                 autoFocus={focus}
             />
             <View style={{

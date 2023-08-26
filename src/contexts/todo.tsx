@@ -1,21 +1,11 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Todo, Status, Group } from '../typings/todo';
+import React, { createContext, useContext, ReactNode, useReducer } from 'react';
+import { Todo, Group } from '../typings/todo';
 import GroupReducer from '../reducers/groups';
 
-export interface TodoUpdate {
-    id: string;
-    title?: string;
-    description?: string;
-    status?: Status;
-}
-
 interface TodoContextType {
+    groups: Group[];
     todos: Todo[];
-    Group: any;
-    addTodo: (newTodo: Todo) => void;
-    updateTodo: (update: TodoUpdate) => void;
-    deleteTodo: (target: any) => void;
+    groupDispatch: React.Dispatch<any>; 
 }
 
 const TodoContext = createContext<TodoContextType | undefined>(undefined);
@@ -33,66 +23,12 @@ interface TodoProviderProps {
 }
 
 export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
-    // Load todos from AsyncStorage on component mount
-    const [groups, setGroups] = useState<Group[]>([]);
-    const [todos, setTodos] = useState<Todo[]>([]);
-
-    useEffect(() => {
-        const loadTodos = async () => {
-            try {
-                const storedTodos = await AsyncStorage.getItem('todos');
-                if (storedTodos) {
-                    setTodos(JSON.parse(storedTodos));
-                }
-            } catch (error) {
-                console.error('Error loading todos from AsyncStorage:', error);
-            }
-        };
-
-        loadTodos();
-    }, []);
-
-    const addTodo = (newTodo: Todo) => {
-        setTodos([...todos, newTodo]);
-    };
-
-    const updateTodo = (update: TodoUpdate) => {
-        setTodos(prevTodos =>
-            prevTodos.map(todo =>
-                todo.id === update.id
-                    ? { ...todo, ...update }
-                    : todo
-            )
-        );
-    };
-
-    const deleteTodo = (targetId: string) => {
-        setTodos(prevTodos => {
-            const updatedTodos = prevTodos.filter(todo => todo.id !== targetId);
-            return updatedTodos;
-        });
-    };
-
-    useEffect(() => {
-        const saveTodos = async () => {
-            try {
-                await AsyncStorage.setItem('todos', JSON.stringify(todos));
-            } catch (error) {
-                console.error('Error saving todos to AsyncStorage:', error);
-            }
-        };
-
-        saveTodos();
-    }, [todos]);
+    const [groups, groupDispatch] = useReducer(GroupReducer, []); 
 
     const value: TodoContextType = {
-        todos,
-        addTodo,
-        updateTodo,
-        deleteTodo,
-        ...{
-            Group:  () => React.useReducer(GroupReducer, groups)
-        }
+        groups,
+        groupDispatch,
+        todos: [],
     };
 
     return (

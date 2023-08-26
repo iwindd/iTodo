@@ -4,8 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { TodoProvider } from './contexts/todo';
 import HomeScreen from './screens/home';
-import AddScreen from './screens/add';
-import EditScreen from './screens/edit';
 
 import Group from './screens/groups';
 

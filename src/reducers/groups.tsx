@@ -1,8 +1,8 @@
 import { Group } from '../typings/todo';
-type Type = "Add" | "Remove";
+type Type = "Add" | "Remove" | "Edit";
 type Action = {
     type: Type,
-    payload?: Group
+    payload: Group
 };
 
 const reducer = (states: any, action: Action) => {
@@ -10,7 +10,11 @@ const reducer = (states: any, action: Action) => {
         case "Add":
             return [...states, action.payload]
         case "Remove":
-            return states.filter((state : Group) => state.id !== action.payload?.id)
+            return states.filter((state: Group) => state.id !== action.payload?.id)
+        case "Edit":
+            return states.map((state: Group) =>
+                state.id === action.payload.id ? { ...state, ...action.payload } : state
+            );
         default:
             return states
     }

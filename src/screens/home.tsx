@@ -9,8 +9,7 @@ import { Group } from '../typings/todo';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 function Index({ navigation }: any) {
-    const { todos, Group } = useTodoContext();
-    const [Groups, Dispatch] = Group();
+    const { groups: Groups, groupDispatch: Dispatch } = useTodoContext();
 
     return (
         <View style={{ flexGrow: 1 }}>
