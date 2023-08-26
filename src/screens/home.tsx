@@ -17,11 +17,11 @@ function Index({ navigation }: any) {
             <ScrollView>
                 {
                     Groups.length > 0 ? (
-                        Groups.map((group: any, index) => {
+                        Groups.map((group: Group) => {
                             return <ListItem.Swipeable
+                                key={group.id as string}
                                 leftWidth={0}
                                 rightWidth={screenWidth / 6}
-                                key={index}
                                 onPress={() => {
                                     navigation.navigate("group", {
                                         group: group,

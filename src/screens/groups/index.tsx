@@ -128,8 +128,8 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                     todos.filter(todo => todo.group == Group.id).length > 0 ? (
                         <View>
                             {
-                                todos.filter(todo => todo.group == Group.id && todo.status == 0).map((todo: any) => {
-                                    return <TodoItem key={todo.key} todo={todo} Group={Group} navigation={navigation} />
+                                todos.filter(todo => todo.group == Group.id && todo.status == 0).map((todo: string) => {
+                                    return <TodoItem key={todo.id as string} todo={todo} Group={Group} navigation={navigation} />
                                 })
                             }
                             <ListItem.Accordion
@@ -147,8 +147,8 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                                 onPress={() => toggleExpand(1)}
                             >
                                 {
-                                    todos.filter(todo => todo.group == Group.id && todo.status == 1).map((todo: any) => {
-                                        return <TodoItem key={todo.key} todo={todo} Group={Group} navigation={navigation} />
+                                    todos.filter(todo => todo.group == Group.id && todo.status == 1).map((todo: Todo) => {
+                                        return <TodoItem key={todo.id as string} todo={todo} Group={Group} navigation={navigation} />
                                     })
                                 }
                             </ListItem.Accordion>
@@ -167,8 +167,8 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                                 onPress={() => toggleExpand(2)}
                             >
                                 {
-                                    todos.filter(todo => todo.group == Group.id && todo.status == 2).map((todo: any) => {
-                                        return <TodoItem key={todo.key} todo={todo} Group={Group} navigation={navigation} />
+                                    todos.filter(todo => todo.group == Group.id && todo.status == 2).map((todo: Todo, index) => {
+                                        return <TodoItem key={todo.id as string} todo={todo} Group={Group} navigation={navigation} />
                                     })
                                 }
                             </ListItem.Accordion>
