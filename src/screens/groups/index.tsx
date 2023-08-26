@@ -7,7 +7,7 @@ import { ListItem, Button as ListButton, Icon } from '@rneui/themed';
 import uuid from 'react-native-uuid';
 /* import Icon from 'react-native-vector-icons/AntDesign';
  */
-function Index({ route: { params: { group: payload, focus }, navigation } }: any) {
+function Index({ route: { params: { group: payload, focus } }, navigation }: any) {
     const { groupDispatch, todoDispatch, todos } = useTodoContext();
 
     const [Group, setGroup] = React.useState<Group>(payload);
@@ -43,6 +43,11 @@ function Index({ route: { params: { group: payload, focus }, navigation } }: any
                             return <>
                                 <ListItem.Swipeable
                                     key={todo.id}
+                                    onPress={() => {
+                                        navigation.navigate("todo", {
+                                            todo, Group
+                                        })
+                                    }}
                                     rightContent={(reset) => (
                                         <ListButton
                                             title="Delete"
@@ -96,6 +101,9 @@ function Index({ route: { params: { group: payload, focus }, navigation } }: any
                                     <ListItem.Content>
                                         <ListItem.Title>{todo.title}</ListItem.Title>
                                     </ListItem.Content>
+                                    <ListItem.Subtitle>
+                                        {todo.description}
+                                    </ListItem.Subtitle>
                                     <ListItem.Chevron />
                                 </ListItem.Swipeable>
                             </>
