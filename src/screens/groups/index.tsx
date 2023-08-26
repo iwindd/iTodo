@@ -3,11 +3,11 @@ import { Text, TextInput, Button, Divider } from 'react-native-paper'
 import { View, ScrollView } from 'react-native';
 import { useTodoContext } from '../../contexts/todo';
 import { Group, statusIcons } from '../../typings';
-import { ListItem, Button as ListButton } from '@rneui/themed';
-import uuid from 'react-native-uuid'
-import Icon from 'react-native-vector-icons/AntDesign';
-
-function Index({ route: { params: { group: payload, focus } } }: any) {
+import { ListItem, Button as ListButton, Icon } from '@rneui/themed';
+import uuid from 'react-native-uuid';
+/* import Icon from 'react-native-vector-icons/AntDesign';
+ */
+function Index({ route: { params: { group: payload, focus }, navigation } }: any) {
     const { groupDispatch, todoDispatch, todos } = useTodoContext();
 
     const [Group, setGroup] = React.useState<Group>(payload);
@@ -43,7 +43,6 @@ function Index({ route: { params: { group: payload, focus } } }: any) {
                             return <>
                                 <ListItem.Swipeable
                                     key={todo.id}
-
                                     rightContent={(reset) => (
                                         <ListButton
                                             title="Delete"
@@ -53,7 +52,28 @@ function Index({ route: { params: { group: payload, focus } } }: any) {
                                         />
                                     )}
                                 >
-                                    <Icon name={statusIcons[todo.status]} size={20} />
+                                    <Icon
+                                        name={statusIcons[todo.status]}
+                                        type='antdesign'
+                                        onPress={() => {
+                                            const nextStatus = todo.status == 0 ? 2 : 0;
+                                            todoDispatch({
+                                                type: "Edit", payload: {
+                                                    ...todo,
+                                                    ...{ status: nextStatus }
+                                                }
+                                            })
+                                        }}
+                                        onLongPress={() => {
+                                            todoDispatch({
+                                                type: "Edit", payload: {
+                                                    ...todo,
+                                                    ...{ status: 1 }
+                                                }
+                                            })
+                                        }}
+                                    />
+
                                     <ListItem.Content>
                                         <ListItem.Title>{todo.title}</ListItem.Title>
                                     </ListItem.Content>
