@@ -8,9 +8,7 @@ import { TextInput } from 'react-native-paper';
 function Index({ route: { params: { todo, Group } }, navigation }: any) {
     const [Todo, setTodo] = React.useState<Todo>(todo);
     const { todoDispatch } = useTodoContext();
-
     const [description, setDescription] = React.useState<string>(todo.description);
-
 
     return (
         <View>
@@ -72,7 +70,6 @@ function Index({ route: { params: { todo, Group } }, navigation }: any) {
                         setTodo(payload)
                     }}
                 />
-
                 <ListItem.Content>
                     <ListItem.Title>{todo.title}</ListItem.Title>
                 </ListItem.Content>
@@ -84,6 +81,10 @@ function Index({ route: { params: { todo, Group } }, navigation }: any) {
                 value={description}
                 onChangeText={text => setDescription(text)}
                 maxLength={20}
+                style={{
+                    backgroundColor: "rgba(0, 255, 255, 0)",
+                    margin: 5
+                }}
                 onBlur={() => {
                     const payload: Todo = {
                         ...todo,

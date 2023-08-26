@@ -2,10 +2,82 @@ import React from 'react'
 import { Text, TextInput, Button, Divider } from 'react-native-paper'
 import { View, ScrollView, Alert, TextInput as Input } from 'react-native';
 import { useTodoContext } from '../../contexts/todo';
-import { Group, statusIcons } from '../../typings';
+import { Group, Status, Todo, statusIcons } from '../../typings';
 import { ListItem, Button as ListButton, Icon } from '@rneui/themed';
 import uuid from 'react-native-uuid';
-import Icon2 from 'react-native-vector-icons/AntDesign';
+
+const TodoItem = ({ todo, Group, navigation }: {
+    todo: Todo,
+    Group: Group,
+    navigation: any
+}) => {
+    const { todoDispatch } = useTodoContext();
+
+    return <ListItem.Swipeable
+        onPress={() => {
+            navigation.navigate("todo", {
+                todo, Group
+            })
+        }}
+        rightContent={(reset) => (
+            <ListButton
+                title="Delete"
+                icon={{ name: 'delete', color: 'white' }}
+                buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
+                onPress={() => {
+                    Alert.alert(
+                        'แจ้งเตือน',
+                        `"${todo.title}" จะถูกลบอย่างถาวร`,
+                        [
+                            {
+                                text: 'ยกเลิก',
+                                style: 'cancel',
+                            },
+                            {
+                                text: 'ลบรายการ',
+                                style: 'default',
+                                onPress: () => {
+                                    todoDispatch({ type: "Remove", payload: todo })
+                                    reset()
+                                }
+                            }
+                        ]
+                    )
+                }}
+            />
+        )}
+    >
+        <Icon
+            name={statusIcons[todo.status]}
+            type='antdesign'
+            onPress={() => {
+                const nextStatus = todo.status == 0 ? 2 : 0;
+                todoDispatch({
+                    type: "Edit", payload: {
+                        ...todo,
+                        ...{ status: nextStatus }
+                    }
+                })
+            }}
+            onLongPress={() => {
+                todoDispatch({
+                    type: "Edit", payload: {
+                        ...todo,
+                        ...{ status: 1 }
+                    }
+                })
+            }}
+        />
+
+        <ListItem.Content>
+            <ListItem.Title>{todo.title}</ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Subtitle>
+            {todo.description}
+        </ListItem.Subtitle>
+        <ListItem.Chevron />
+    </ListItem.Swipeable>
+}
 
 function Index({ route: { params: { group: payload, focus } }, navigation }: any) {
     const { groupDispatch, todoDispatch, todos } = useTodoContext();
@@ -16,6 +88,15 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
 
     const [isInsert, setInsertMode] = React.useState<boolean>(false);
     const [InsertVal, setInsertVal] = React.useState<string>("");
+
+    const [expand, setExpand] = React.useState<boolean[]>([true, true, true])
+    const toggleExpand = (sectionId: 0 | 1 | 2) => {
+        setExpand(prevExpand => ({
+            ...prevExpand,
+            [sectionId]: !prevExpand[sectionId]
+        }));
+    };
+
 
     return (
         <View style={{ flexGrow: 1 }}>
@@ -42,73 +123,53 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
             <ScrollView>
                 {
                     todos.filter(todo => todo.group == Group.id).length > 0 ? (
-                        todos.filter(todo => todo.group == Group.id).map((todo: any) => {
-                            return <ListItem.Swipeable
-                                key={todo.id}
-                                onPress={() => {
-                                    navigation.navigate("todo", {
-                                        todo, Group
-                                    })
+                        <View>
+                            {
+                                todos.filter(todo => todo.group == Group.id && todo.status == 0).map((todo: any) => {
+                                    return <TodoItem key={todo.key} todo={todo} Group={Group} navigation={navigation} />
+                                })
+                            }
+                            <ListItem.Accordion
+                                style={{
+                                    display: todos.filter(todo => todo.group == Group.id && todo.status == 1).length <= 0 ? "none" : undefined
                                 }}
-                                rightContent={(reset) => (
-                                    <ListButton
-                                        title="Delete"
-                                        icon={{ name: 'delete', color: 'white' }}
-                                        buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
-                                        onPress={() => {
-                                            Alert.alert(
-                                                'แจ้งเตือน',
-                                                `"${todo.title}" จะถูกลบอย่างถาวร`,
-                                                [
-                                                    {
-                                                        text: 'ยกเลิก',
-                                                        style: 'cancel',
-                                                    },
-                                                    {
-                                                        text: 'ลบรายการ',
-                                                        style: 'default',
-                                                        onPress: () => {
-                                                            todoDispatch({ type: "Remove", payload: todo })
-                                                            reset()
-                                                        }
-                                                    }
-                                                ]
-                                            )
-                                        }}
-                                    />
-                                )}
+                                content={
+                                    <>
+                                        <ListItem.Content>
+                                            <ListItem.Title>กำลังดำเนินการ</ListItem.Title>
+                                        </ListItem.Content>
+                                    </>
+                                }
+                                isExpanded={expand[1]}
+                                onPress={() => toggleExpand(1)}
                             >
-                                <Icon
-                                    name={statusIcons[todo.status]}
-                                    type='antdesign'
-                                    onPress={() => {
-                                        const nextStatus = todo.status == 0 ? 2 : 0;
-                                        todoDispatch({
-                                            type: "Edit", payload: {
-                                                ...todo,
-                                                ...{ status: nextStatus }
-                                            }
-                                        })
-                                    }}
-                                    onLongPress={() => {
-                                        todoDispatch({
-                                            type: "Edit", payload: {
-                                                ...todo,
-                                                ...{ status: 1 }
-                                            }
-                                        })
-                                    }}
-                                />
-
-                                <ListItem.Content>
-                                    <ListItem.Title>{todo.title}</ListItem.Title>
-                                </ListItem.Content>
-                                <ListItem.Subtitle>
-                                    {todo.description}
-                                </ListItem.Subtitle>
-                                <ListItem.Chevron />
-                            </ListItem.Swipeable>
-                        })
+                                {
+                                    todos.filter(todo => todo.group == Group.id && todo.status == 1).map((todo: any) => {
+                                        return <TodoItem key={todo.key} todo={todo} Group={Group} navigation={navigation} />
+                                    })
+                                }
+                            </ListItem.Accordion>
+                            <ListItem.Accordion
+                                style={{
+                                    display: todos.filter(todo => todo.group == Group.id && todo.status == 2).length <= 0 ? "none" : undefined
+                                }}
+                                content={
+                                    <>
+                                        <ListItem.Content>
+                                            <ListItem.Title>เสร็จแล้ว</ListItem.Title>
+                                        </ListItem.Content>
+                                    </>
+                                }
+                                isExpanded={expand[2]}
+                                onPress={() => toggleExpand(2)}
+                            >
+                                {
+                                    todos.filter(todo => todo.group == Group.id && todo.status == 2).map((todo: any) => {
+                                        return <TodoItem key={todo.key} todo={todo} Group={Group} navigation={navigation} />
+                                    })
+                                }
+                            </ListItem.Accordion>
+                        </View>
                     ) : (
                         <View style={{
                             display: "flex",
