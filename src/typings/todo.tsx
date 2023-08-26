@@ -2,8 +2,15 @@ export const statusLabel = ["ยังไม่ได้ทำ", "กำลั�
 export type Status = 0 | 1 | 2;
 
 export interface Todo {
-    id: any;
+    id: string | number[];
+    group: string;
     title: string;
     description?: string;
     status: Status;
+}
+
+export interface Group{
+    id: string | number[];
+    title: string,
+    icon?: string
 }

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Todo, Status } from '../typings/todo';
+import { Todo, Status, Group } from '../typings/todo';
+import GroupReducer from '../reducers/groups';
 
 export interface TodoUpdate {
     id: string;
@@ -11,6 +12,7 @@ export interface TodoUpdate {
 
 interface TodoContextType {
     todos: Todo[];
+    Group: any;
     addTodo: (newTodo: Todo) => void;
     updateTodo: (update: TodoUpdate) => void;
     deleteTodo: (target: any) => void;
@@ -32,6 +34,7 @@ interface TodoProviderProps {
 
 export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
     // Load todos from AsyncStorage on component mount
+    const [groups, setGroups] = useState<Group[]>([]);
     const [todos, setTodos] = useState<Todo[]>([]);
 
     useEffect(() => {
@@ -86,7 +89,10 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
         todos,
         addTodo,
         updateTodo,
-        deleteTodo
+        deleteTodo,
+        ...{
+            Group:  () => React.useReducer(GroupReducer, groups)
+        }
     };
 
     return (
