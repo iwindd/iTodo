@@ -33,6 +33,27 @@ function Index({ navigation }: any) {
                                         title=""
                                         icon={{ name: 'delete', color: 'white' }}
                                         buttonStyle={{ minHeight: '100%', backgroundColor: '#F45050' }}
+                                        onPress={() => {
+                                            Alert.alert(
+                                                'แจ้งเตือน',
+                                                `"${group.title}" จะถูกลบอย่างถาวร`,
+                                                [
+                                                    {
+                                                        text: 'ยกเลิก',
+                                                        style: 'cancel',
+                                                    },
+                                                    {
+                                                        text: 'ลบรายการ',
+                                                        style: 'default',
+                                                        onPress: () => {
+                                                            groupDispatch({ type: "Remove", payload: group })
+                                                            todoDispatch({ type: "Removes", group: group.id })
+                                                            reset()
+                                                        }
+                                                    }
+                                                ]
+                                            )
+                                        }}
                                     />
 
                                 )}
