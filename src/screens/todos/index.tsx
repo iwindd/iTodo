@@ -10,7 +10,7 @@ function Index({ route: { params: { todo, Group } }, navigation }: any) {
     const { todoDispatch } = useTodoContext();
 
     const [description, setDescription] = React.useState<string>(todo.description);
-    
+
 
     return (
         <View>
@@ -85,12 +85,12 @@ function Index({ route: { params: { todo, Group } }, navigation }: any) {
                 onChangeText={text => setDescription(text)}
                 maxLength={20}
                 onBlur={() => {
-                    const payload : Todo = {
+                    const payload: Todo = {
                         ...todo,
-                        ...{description: description}
+                        ...{ description: description }
                     }
 
-                    todoDispatch({type: "Edit", payload: payload})
+                    todoDispatch({ type: "Edit", payload: payload })
                 }}
             />
         </View>

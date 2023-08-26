@@ -4,12 +4,12 @@ import { View, ScrollView, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTodoContext } from '../contexts/todo';
 import { ListItem, Button as ListButton } from '@rneui/themed';
-import { Group } from '../typings';
+import { Group, Todo } from '../typings';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import uuid from 'react-native-uuid';
 
 function Index({ navigation }: any) {
-    const { groups: Groups, groupDispatch: Dispatch } = useTodoContext();
+    const { groups: Groups, groupDispatch: Dispatch, todos } = useTodoContext();
 
     return (
         <View style={{ flexGrow: 1 }}>
@@ -58,6 +58,9 @@ function Index({ navigation }: any) {
                                     <ListItem.Content>
                                         <ListItem.Title>{group.title}</ListItem.Title>
                                     </ListItem.Content>
+                                    <ListItem.Subtitle>
+                                        #{todos.filter((todo : Todo) => todo.group == group.id).length}
+                                    </ListItem.Subtitle>
                                 </ListItem.Swipeable>
                             </>
                         })
