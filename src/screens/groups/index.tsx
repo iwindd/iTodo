@@ -2,9 +2,10 @@ import React from 'react'
 import { Text, TextInput, Button, Divider } from 'react-native-paper'
 import { View, ScrollView } from 'react-native';
 import { useTodoContext } from '../../contexts/todo';
-import { Group } from '../../typings';
+import { Group, statusIcons } from '../../typings';
 import { ListItem, Button as ListButton } from '@rneui/themed';
 import uuid from 'react-native-uuid'
+import Icon from 'react-native-vector-icons/AntDesign';
 
 function Index({ route: { params: { group: payload, focus } } }: any) {
     const { groupDispatch, todoDispatch, todos } = useTodoContext();
@@ -38,10 +39,10 @@ function Index({ route: { params: { group: payload, focus } } }: any) {
             <ScrollView>
                 {
                     todos.filter(todo => todo.group == Group.id).length > 0 ? (
-                        todos.filter(todo => todo.group == Group.id).map((group: any) => {
+                        todos.filter(todo => todo.group == Group.id).map((todo: any) => {
                             return <>
                                 <ListItem.Swipeable
-                                    key={group.id}
+                                    key={todo.id}
 
                                     rightContent={(reset) => (
                                         <ListButton
@@ -52,10 +53,11 @@ function Index({ route: { params: { group: payload, focus } } }: any) {
                                         />
                                     )}
                                 >
-
+                                    <Icon name={statusIcons[todo.status]} size={20} />
                                     <ListItem.Content>
-                                        <ListItem.Title>{group.title}</ListItem.Title>
+                                        <ListItem.Title>{todo.title}</ListItem.Title>
                                     </ListItem.Content>
+                                    <ListItem.Chevron />
                                 </ListItem.Swipeable>
                             </>
                         })

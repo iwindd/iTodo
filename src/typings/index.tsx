@@ -1,4 +1,5 @@
 export const statusLabel = ["ยังไม่ได้ทำ", "กำลังทำ", "เสร็จสิ้น"];
+export const statusIcons = ["clockcircleo", "checkcircleo", "checkcircle"];
 export type Status = 0 | 1 | 2;
 
 export interface Todo {
