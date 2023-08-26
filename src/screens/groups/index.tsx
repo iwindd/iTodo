@@ -128,7 +128,7 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                     todos.filter(todo => todo.group == Group.id).length > 0 ? (
                         <View>
                             {
-                                todos.filter(todo => todo.group == Group.id && todo.status == 0).map((todo: string) => {
+                                todos.filter(todo => todo.group == Group.id && todo.status == 0).map((todo: Todo) => {
                                     return <TodoItem key={todo.id as string} todo={todo} Group={Group} navigation={navigation} />
                                 })
                             }
