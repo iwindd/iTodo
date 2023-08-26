@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Alert } from 'react-native';
 import { TextInput, Text, Button } from '@react-native-material/core';
 import { useTodoContext } from '../contexts/todo';
-import { Status, statusLabel } from '../typings/todo';
+import { Status, statusLabel } from '../typings';
 import SelectDropdown from 'react-native-select-dropdown'
 import Icon from 'react-native-vector-icons/FontAwesome'
 

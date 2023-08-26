@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, TextInput, Button } from 'react-native-paper'
 import { View } from 'react-native';
 import { useTodoContext } from '../../contexts/todo';
-import { Group } from '../../typings/todo';
+import { Group } from '../../typings';
 
 function Index({ route: { params: { group : payload, focus } } }: any) {
     const { groupDispatch : Dispatch } = useTodoContext();

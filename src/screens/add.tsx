@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { TextInput, Text } from 'react-native-paper'; // Import components from react-native-paper
 import { useTodoContext } from '../contexts/todo';
-import { Status, statusLabel } from '../typings/todo';
+import { Status, statusLabel } from '../typings';
 import { Button } from '@react-native-material/core';
 import uuid from 'react-native-uuid';
 import SelectDropdown from 'react-native-select-dropdown';

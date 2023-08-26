@@ -1,5 +1,5 @@
 import React, { createContext, useContext, ReactNode, useReducer } from 'react';
-import { Todo, Group } from '../typings/todo';
+import { Todo, Group } from '../typings';
 import GroupReducer from '../reducers/groups';
 
 interface TodoContextType {

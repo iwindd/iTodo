@@ -5,7 +5,7 @@ import { Button, IconButton, List } from 'react-native-paper';
 import { useTodoContext } from '../contexts/todo';
 import uuid from 'react-native-uuid';
 import { ListItem, Button as ListButton } from '@rneui/themed';
-import { Group } from '../typings/todo';
+import { Group } from '../typings';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 function Index({ navigation }: any) {
