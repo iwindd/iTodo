@@ -3,11 +3,12 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { TodoProvider } from './src/contexts/todo';
 
-import HomeScreen from './src/screens/home';
-import AddScreen from './src/screens/add';
-import EditScreen from './src/screens/edit';
+import { TodoProvider } from './contexts/todo';
+import HomeScreen from './screens/home';
+import AddScreen from './screens/add';
+import EditScreen from './screens/edit';
+
 const Stack = createNativeStackNavigator();
 
 function App() {
