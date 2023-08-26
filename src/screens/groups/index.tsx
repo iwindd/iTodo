@@ -1,12 +1,12 @@
 import React from 'react'
 import { Text, TextInput, Button, Divider } from 'react-native-paper'
-import { View, ScrollView, Alert } from 'react-native';
+import { View, ScrollView, Alert, TextInput as Input } from 'react-native';
 import { useTodoContext } from '../../contexts/todo';
 import { Group, statusIcons } from '../../typings';
 import { ListItem, Button as ListButton, Icon } from '@rneui/themed';
 import uuid from 'react-native-uuid';
-/* import Icon from 'react-native-vector-icons/AntDesign';
- */
+import Icon2 from 'react-native-vector-icons/AntDesign';
+
 function Index({ route: { params: { group: payload, focus } }, navigation }: any) {
     const { groupDispatch, todoDispatch, todos } = useTodoContext();
 
@@ -19,8 +19,7 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
 
     return (
         <View style={{ flexGrow: 1 }}>
-            <TextInput
-                label="ชื่อรายการ"
+            <Input
                 value={title}
                 onChangeText={text => setTitle(text)}
                 onFocus={() => setFocus(true)}
@@ -33,9 +32,13 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                     groupDispatch({ type: "Edit", payload: payload })
                     setGroup(payload)
                 }}
+                maxLength={20}
                 autoFocus={focus}
-            />
-            <Divider style={{ marginVertical: 15 }} />
+                style={{
+                    margin: 5,
+                    fontSize: 30
+                }}
+            ></Input>
             <ScrollView>
                 {
                     todos.filter(todo => todo.group == Group.id).length > 0 ? (
@@ -124,7 +127,8 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                 bottom: 0,
                 right: 0,
                 width: '100%',
-                padding: 0
+                backgroundColor: "white",
+                padding: 5
             }}>
                 {!isInsert ? (
                     <Button
@@ -136,26 +140,29 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                         เพิ่มงาน
                     </Button>
                 ) : (
-                    <TextInput
-                        label="เพิ่มงาน"
-                        value={InsertVal}
-                        onChangeText={text => setInsertVal(text)}
-                        autoFocus={isInsert}
-                        onBlur={() => {
-                            setInsertMode(false)
-                            if (InsertVal.length > 0) {
-                                setInsertVal("");
-                                todoDispatch({
-                                    type: "Add", payload: {
-                                        id: uuid.v4(),
-                                        group: Group.id,
-                                        title: InsertVal,
-                                        status: 0
-                                    }
-                                })
-                            }
-                        }}
-                    />
+                    <View>
+                        <Input
+                            placeholder="เพิ่มงาน"
+                            value={InsertVal}
+                            onChangeText={text => setInsertVal(text)}
+                            autoFocus={isInsert}
+                            multiline={false}
+                            onBlur={() => {
+                                setInsertMode(false)
+                                if (InsertVal.length > 0) {
+                                    setInsertVal("");
+                                    todoDispatch({
+                                        type: "Add", payload: {
+                                            id: uuid.v4(),
+                                            group: Group.id,
+                                            title: InsertVal,
+                                            status: 0
+                                        }
+                                    })
+                                }
+                            }}
+                        />
+                    </View>
                 )}
             </View>
         </View>

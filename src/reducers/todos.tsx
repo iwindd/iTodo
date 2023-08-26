@@ -10,7 +10,7 @@ type Action = {
 const reducer = (states: any, action: Action) => {
     switch (action.type) {
         case "Add":
-            return [...states, action.payload];
+            return [action.payload, ...states];
         case "Remove":
             const todoIdToRemove = (action.payload as Todo).id; 
             return states.filter((state: Todo) => state.id !== todoIdToRemove);

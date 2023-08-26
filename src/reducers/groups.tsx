@@ -9,7 +9,7 @@ type Action = {
 const reducer = (states: any, action: Action) => {
     switch (action.type) {
         case "Add":
-            return [...states, action.payload];
+            return [action.payload, ...states];
         case "Remove":
             const groupToRemove = action.payload as Group; 
             return states.filter((state: Group) => state.id !== groupToRemove.id);
