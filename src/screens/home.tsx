@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import uuid from 'react-native-uuid';
 
 function Index({ navigation }: any) {
-    const { groups: Groups, groupDispatch: Dispatch, todos } = useTodoContext();
+    const { groups: Groups, groupDispatch, todoDispatch, todos } = useTodoContext();
 
     return (
         <View style={{ flexGrow: 1 }}>
@@ -42,7 +42,8 @@ function Index({ navigation }: any) {
                                                             text: 'ลบรายการ',
                                                             style: 'default',
                                                             onPress: () => {
-                                                                Dispatch({ type: "Remove", payload: group })
+                                                                groupDispatch({ type: "Remove", payload: group })
+                                                                todoDispatch({type : "Removes", group: group.id})
                                                                 reset()
                                                             }
                                                         }
@@ -94,7 +95,7 @@ function Index({ navigation }: any) {
                             title: "รายการใหม่"
                         };
 
-                        Dispatch({ type: "Add", payload: payload })
+                        groupDispatch({ type: "Add", payload: payload })
                         navigation.navigate("group", {
                             group: payload,
                             focus: true
