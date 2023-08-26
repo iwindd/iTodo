@@ -192,6 +192,7 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                 right: 0,
                 width: '100%',
                 backgroundColor: "white",
+                
                 padding: 5
             }}>
                 {!isInsert ? (
@@ -199,6 +200,7 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                         icon="plus"
                         mode="text"
                         rippleColor={"rgba(0,0,0,0)"}
+                        textColor='#19A7CE'
                         onPress={() => setInsertMode(true)}
                     >
                         เพิ่มงาน

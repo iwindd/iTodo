@@ -69,6 +69,7 @@ function Index({ navigation }: any) {
                 <Button
                     icon="plus"
                     mode="text"
+                    textColor='#19A7CE'
                     rippleColor={"rgba(0,0,0,0)"}
                     onPress={() => {
                         const payload: Group = {
