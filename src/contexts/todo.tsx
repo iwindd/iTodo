@@ -50,7 +50,6 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
         AsyncStorage.setItem('todos', JSON.stringify(todos));
     }, [groups, todos]);
 
-
     const value: TodoContextType = {
         groups,
         groupDispatch,

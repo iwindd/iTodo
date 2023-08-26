@@ -4,6 +4,7 @@ import { View, ScrollView, Alert, TextInput as Input, Dimensions } from 'react-n
 import { useTodoContext } from '../../contexts/todo';
 import { Group, Todo, statusIcons } from '../../typings';
 import { ListItem, Button as ListButton, Icon } from '@rneui/themed';
+import { TodoStatusChangedShake } from '../../components/shake';
 import uuid from 'react-native-uuid';
 
 const TodoItem = ({ todo, Group, navigation }: {
@@ -55,6 +56,7 @@ const TodoItem = ({ todo, Group, navigation }: {
             type='antdesign'
             onPress={() => {
                 const nextStatus = todo.status == 0 ? 2 : 0;
+                TodoStatusChangedShake()
                 todoDispatch({
                     type: "Edit", payload: {
                         ...todo,

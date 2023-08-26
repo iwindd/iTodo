@@ -99,12 +99,6 @@ function Index({ route: { params: { todo, Group } }, navigation }: any) {
             />
         </View>
     )
-
-
-    /* 
-    
-           
-    */
 }
 
 export default Index
