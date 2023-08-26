@@ -40,73 +40,71 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                 {
                     todos.filter(todo => todo.group == Group.id).length > 0 ? (
                         todos.filter(todo => todo.group == Group.id).map((todo: any) => {
-                            return <>
-                                <ListItem.Swipeable
-                                    key={todo.id}
-                                    onPress={() => {
-                                        navigation.navigate("todo", {
-                                            todo, Group
-                                        })
-                                    }}
-                                    rightContent={(reset) => (
-                                        <ListButton
-                                            title="Delete"
-                                            icon={{ name: 'delete', color: 'white' }}
-                                            buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
-                                            onPress={() => {
-                                                Alert.alert(
-                                                    'แจ้งเตือน',
-                                                    `"${todo.title}" จะถูกลบอย่างถาวร`,
-                                                    [
-                                                        {
-                                                            text: 'ยกเลิก',
-                                                            style: 'cancel',
-                                                        },
-                                                        {
-                                                            text: 'ลบรายการ',
-                                                            style: 'default',
-                                                            onPress: () => {
-                                                                todoDispatch({ type: "Remove", payload: todo })
-                                                                reset()
-                                                            }
-                                                        }
-                                                    ]
-                                                )
-                                            }}
-                                        />
-                                    )}
-                                >
-                                    <Icon
-                                        name={statusIcons[todo.status]}
-                                        type='antdesign'
+                            return <ListItem.Swipeable
+                                key={todo.id}
+                                onPress={() => {
+                                    navigation.navigate("todo", {
+                                        todo, Group
+                                    })
+                                }}
+                                rightContent={(reset) => (
+                                    <ListButton
+                                        title="Delete"
+                                        icon={{ name: 'delete', color: 'white' }}
+                                        buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
                                         onPress={() => {
-                                            const nextStatus = todo.status == 0 ? 2 : 0;
-                                            todoDispatch({
-                                                type: "Edit", payload: {
-                                                    ...todo,
-                                                    ...{ status: nextStatus }
-                                                }
-                                            })
-                                        }}
-                                        onLongPress={() => {
-                                            todoDispatch({
-                                                type: "Edit", payload: {
-                                                    ...todo,
-                                                    ...{ status: 1 }
-                                                }
-                                            })
+                                            Alert.alert(
+                                                'แจ้งเตือน',
+                                                `"${todo.title}" จะถูกลบอย่างถาวร`,
+                                                [
+                                                    {
+                                                        text: 'ยกเลิก',
+                                                        style: 'cancel',
+                                                    },
+                                                    {
+                                                        text: 'ลบรายการ',
+                                                        style: 'default',
+                                                        onPress: () => {
+                                                            todoDispatch({ type: "Remove", payload: todo })
+                                                            reset()
+                                                        }
+                                                    }
+                                                ]
+                                            )
                                         }}
                                     />
+                                )}
+                            >
+                                <Icon
+                                    name={statusIcons[todo.status]}
+                                    type='antdesign'
+                                    onPress={() => {
+                                        const nextStatus = todo.status == 0 ? 2 : 0;
+                                        todoDispatch({
+                                            type: "Edit", payload: {
+                                                ...todo,
+                                                ...{ status: nextStatus }
+                                            }
+                                        })
+                                    }}
+                                    onLongPress={() => {
+                                        todoDispatch({
+                                            type: "Edit", payload: {
+                                                ...todo,
+                                                ...{ status: 1 }
+                                            }
+                                        })
+                                    }}
+                                />
 
-                                    <ListItem.Content>
-                                        <ListItem.Title>{todo.title}</ListItem.Title>
-                                    </ListItem.Content>
-                                    <ListItem.Subtitle>
-                                        {todo.description}
-                                    </ListItem.Subtitle>
-                                    <ListItem.Chevron />
-                                </ListItem.Swipeable>
-                            </>
+                                <ListItem.Content>
+                                    <ListItem.Title>{todo.title}</ListItem.Title>
+                                </ListItem.Content>
+                                <ListItem.Subtitle>
+                                    {todo.description}
+                                </ListItem.Subtitle>
+                                <ListItem.Chevron />
+                            </ListItem.Swipeable>
                         })
                     ) : (
                         <View style={{
