@@ -1,6 +1,6 @@
 import React from 'react'
 import { ListItem, Button as ListButton, Icon } from '@rneui/themed';
-import { Alert, View, Dimensions } from 'react-native';
+import { Alert, View, Dimensions, Vibration } from 'react-native';
 import { useTodoContext } from '../../contexts/todo';
 import { Todo, statusIcons } from '../../typings';
 import { TextInput } from 'react-native-paper';
@@ -59,7 +59,7 @@ function Index({ route: { params: { todo, Group } }, navigation }: any) {
                             ...{ status: nextStatus }
                         }
 
-
+                        Vibration.vibrate(2000);
                         todoDispatch({ type: "Edit", payload: payload })
                         setTodo(payload);
                     }}
@@ -68,7 +68,8 @@ function Index({ route: { params: { todo, Group } }, navigation }: any) {
                             ...Todo,
                             ...{ status: 1 }
                         }
-
+                        
+                        Vibration.vibrate(3000);
                         todoDispatch({ type: "Edit", payload: payload })
                         setTodo(payload)
                     }}

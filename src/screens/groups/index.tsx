@@ -1,10 +1,9 @@
 import React from 'react'
 import { Text, Button } from 'react-native-paper'
-import { View, ScrollView, Alert, TextInput as Input, Dimensions } from 'react-native';
+import { View, ScrollView, Alert, TextInput as Input, Dimensions, Vibration } from 'react-native';
 import { useTodoContext } from '../../contexts/todo';
 import { Group, Todo, statusIcons } from '../../typings';
 import { ListItem, Button as ListButton, Icon } from '@rneui/themed';
-import { TodoStatusChangedShake } from '../../components/shake';
 import uuid from 'react-native-uuid';
 
 const TodoItem = ({ todo, Group, navigation }: {
@@ -56,7 +55,8 @@ const TodoItem = ({ todo, Group, navigation }: {
             type='antdesign'
             onPress={() => {
                 const nextStatus = todo.status == 0 ? 2 : 0;
-                TodoStatusChangedShake()
+
+                Vibration.vibrate(2000);
                 todoDispatch({
                     type: "Edit", payload: {
                         ...todo,
@@ -65,6 +65,8 @@ const TodoItem = ({ todo, Group, navigation }: {
                 })
             }}
             onLongPress={() => {
+                Vibration.vibrate(3000);
+
                 todoDispatch({
                     type: "Edit", payload: {
                         ...todo,
