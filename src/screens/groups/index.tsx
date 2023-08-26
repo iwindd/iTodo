@@ -87,7 +87,6 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
 
     const [Group, setGroup] = React.useState<Group>(payload);
     const [title, setTitle] = React.useState<string>(payload.title);
-    const [isFocus, setFocus] = React.useState<boolean>(focus);
 
     const [isInsert, setInsertMode] = React.useState<boolean>(false);
     const [InsertVal, setInsertVal] = React.useState<string>("");
@@ -100,15 +99,12 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
         }));
     };
 
-
     return (
         <View style={{ flexGrow: 1 }}>
             <Input
                 value={title}
                 onChangeText={text => setTitle(text)}
-                onFocus={() => setFocus(true)}
                 onBlur={() => {
-                    setFocus(false)
                     const payload: Group = {
                         ...Group,
                         ...{ title: title }
@@ -187,7 +183,6 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
             </ScrollView>
 
             <View style={{
-                display: isFocus ? "none" : undefined,
                 position: 'absolute',
                 bottom: 0,
                 right: 0,
