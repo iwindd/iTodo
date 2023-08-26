@@ -120,7 +120,8 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                 autoFocus={focus}
                 style={{
                     margin: 5,
-                    fontSize: 30
+                    fontSize: 30,
+                    color: "black"
                 }}
             ></Input>
             <ScrollView>

@@ -3,10 +3,9 @@ import { Text } from '@react-native-material/core'; // Import the FAB component
 import { View, ScrollView, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useTodoContext } from '../contexts/todo';
-import { ListItem, Button as ListButton } from '@rneui/themed';
+import { ListItem, Icon, Button as ListButton } from '@rneui/themed';
 import { Group, Todo } from '../typings';
 import { Dimensions } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import uuid from 'react-native-uuid';
 
 function Index({ navigation }: any) {
@@ -58,7 +57,10 @@ function Index({ navigation }: any) {
 
                                 )}
                             >
-                                <Icon name="folder" size={20} />
+                                <Icon
+                                    name="folder"
+                                    type='fontawesome'
+                                />
                                 <ListItem.Content>
                                     <ListItem.Title>{group.title}</ListItem.Title>
                                 </ListItem.Content>
