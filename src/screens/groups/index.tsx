@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, TextInput, Button, Divider } from 'react-native-paper'
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Alert } from 'react-native';
 import { useTodoContext } from '../../contexts/todo';
 import { Group, statusIcons } from '../../typings';
 import { ListItem, Button as ListButton, Icon } from '@rneui/themed';
@@ -46,9 +46,28 @@ function Index({ route: { params: { group: payload, focus }, navigation } }: any
                                     rightContent={(reset) => (
                                         <ListButton
                                             title="Delete"
-                                            onPress={() => { }}
                                             icon={{ name: 'delete', color: 'white' }}
                                             buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
+                                            onPress={() => {
+                                                Alert.alert(
+                                                    'แจ้งเตือน',
+                                                    `"${todo.title}" จะถูกลบอย่างถาวร`,
+                                                    [
+                                                        {
+                                                            text: 'ยกเลิก',
+                                                            style: 'cancel',
+                                                        },
+                                                        {
+                                                            text: 'ลบรายการ',
+                                                            style: 'default',
+                                                            onPress: () => {
+                                                                todoDispatch({ type: "Remove", payload: todo })
+                                                                reset()
+                                                            }
+                                                        }
+                                                    ]
+                                                )
+                                            }}
                                         />
                                     )}
                                 >
