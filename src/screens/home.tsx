@@ -1,12 +1,12 @@
 import React from 'react'
 import { Text } from '@react-native-material/core'; // Import the FAB component
 import { View, ScrollView, Alert } from 'react-native';
-import { Button, IconButton, List } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { useTodoContext } from '../contexts/todo';
-import uuid from 'react-native-uuid';
 import { ListItem, Button as ListButton } from '@rneui/themed';
 import { Group } from '../typings';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import uuid from 'react-native-uuid';
 
 function Index({ navigation }: any) {
     const { groups: Groups, groupDispatch: Dispatch } = useTodoContext();
@@ -48,7 +48,6 @@ function Index({ navigation }: any) {
                                                         }
                                                     ]
                                                 )
-
                                             }}
                                             icon={{ name: 'delete', color: 'white' }}
                                             buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
