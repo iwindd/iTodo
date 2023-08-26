@@ -16,54 +16,52 @@ function Index({ navigation }: any) {
             <ScrollView>
                 {
                     Groups.length > 0 ? (
-                        Groups.map((group: any) => {
-                            return <>
-                                <ListItem.Swipeable
-                                    key={group.id}
-                                    onPress={() => {
-                                        navigation.navigate("group", {
-                                            group: group,
-                                            focus: false
-                                        })
-                                    }}
-                                    rightContent={(reset) => (
-                                        <ListButton
-                                            title="Delete"
-                                            onPress={() => {
-                                                Alert.alert(
-                                                    'แจ้งเตือน',
-                                                    `"${group.title}" จะถูกลบอย่างถาวร`,
-                                                    [
-                                                        {
-                                                            text: 'ยกเลิก',
-                                                            style: 'cancel',
-                                                        },
-                                                        {
-                                                            text: 'ลบรายการ',
-                                                            style: 'default',
-                                                            onPress: () => {
-                                                                groupDispatch({ type: "Remove", payload: group })
-                                                                todoDispatch({type : "Removes", group: group.id})
-                                                                reset()
-                                                            }
+                        Groups.map((group: any, index) => {
+                            return <ListItem.Swipeable
+                                key={index}
+                                onPress={() => {
+                                    navigation.navigate("group", {
+                                        group: group,
+                                        focus: false
+                                    })
+                                }}
+                                rightContent={(reset) => (
+                                    <ListButton
+                                        title="Delete"
+                                        onPress={() => {
+                                            Alert.alert(
+                                                'แจ้งเตือน',
+                                                `"${group.title}" จะถูกลบอย่างถาวร`,
+                                                [
+                                                    {
+                                                        text: 'ยกเลิก',
+                                                        style: 'cancel',
+                                                    },
+                                                    {
+                                                        text: 'ลบรายการ',
+                                                        style: 'default',
+                                                        onPress: () => {
+                                                            groupDispatch({ type: "Remove", payload: group })
+                                                            todoDispatch({ type: "Removes", group: group.id })
+                                                            reset()
                                                         }
-                                                    ]
-                                                )
-                                            }}
-                                            icon={{ name: 'delete', color: 'white' }}
-                                            buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
-                                        />
-                                    )}
-                                >
-                                    <Icon name="folder" size={20} />
-                                    <ListItem.Content>
-                                        <ListItem.Title>{group.title}</ListItem.Title>
-                                    </ListItem.Content>
-                                    <ListItem.Subtitle>
-                                        #{todos.filter((todo : Todo) => todo.group == group.id).length}
-                                    </ListItem.Subtitle>
-                                </ListItem.Swipeable>
-                            </>
+                                                    }
+                                                ]
+                                            )
+                                        }}
+                                        icon={{ name: 'delete', color: 'white' }}
+                                        buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
+                                    />
+                                )}
+                            >
+                                <Icon name="folder" size={20} />
+                                <ListItem.Content>
+                                    <ListItem.Title>{group.title}</ListItem.Title>
+                                </ListItem.Content>
+                                <ListItem.Subtitle>
+                                    #{todos.filter((todo: Todo) => todo.group == group.id).length}
+                                </ListItem.Subtitle>
+                            </ListItem.Swipeable>
                         })
                     ) : (
                         <View style={{
