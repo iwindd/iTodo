@@ -213,6 +213,9 @@ function Index({ route: { params: { group: payload, focus } }, navigation }: any
                             onChangeText={text => setInsertVal(text)}
                             autoFocus={isInsert}
                             multiline={false}
+                            style={{
+                                color: "black",
+                            }}
                             onBlur={() => {
                                 setInsertMode(false)
                                 if (InsertVal.length > 0) {
